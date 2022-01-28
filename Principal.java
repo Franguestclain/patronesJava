@@ -15,22 +15,9 @@ public class Principal {
         * apellido varchar (20),
         * edad int(2)
         */
-       ResultSet rs = db.getAllData("personas");
-
-       Person p1 = new Person("Pedro", "Santo", 99);
-       // Porque? Maria
-       Person p2 = new Person("Maria", "santisima", 99);
+       ResultSet rs = db.query("SELECT * FROM personas");
 
        try{
-
-        // db.insertPerson(p1);
-        // db.insertPerson(p2);
-
-        // db.deletePerson(2);
-
-
-        // p1.setApellido("wasauski");
-        // db.updatePerson(3, p1);
 
         while(rs.next()){
           System.out.println(

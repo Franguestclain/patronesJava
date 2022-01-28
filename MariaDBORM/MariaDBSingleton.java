@@ -2,11 +2,9 @@ package MariaDBORM;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import MariaDBORM.Person;
 
 
 public class MariaDBSingleton {
@@ -39,11 +37,11 @@ public class MariaDBSingleton {
     return this.connection;
   }
 
-  public ResultSet getAllData(String table){
+  public ResultSet query(String query){
     ResultSet result = null;
     try{
       Statement s = this.connection.createStatement();
-      result = s.executeQuery(String.format("SELECT * FROM %s", table));
+      result = s.executeQuery(query);
     }catch (SQLException e){
       e.printStackTrace();
     }
@@ -51,45 +49,9 @@ public class MariaDBSingleton {
     return result;
   }
 
-  public boolean insertPerson(Person p){
+  public boolean execute(String query){
     try{
-
-      PreparedStatement ps = this.connection.prepareStatement("insert into personas values (null, ?, ?, ?)");
-      ps.setString(1, p.getNombre());
-      ps.setString(2, p.getApellido());
-      ps.setInt(3, p.getEdad());
-      ps.executeUpdate();
-    }catch(SQLException e){
-      e.printStackTrace();
-      return false;
-    }
-
-    return true;
-  }
-
-  public boolean deletePerson(int id){
-    try{
-
-      PreparedStatement ps = this.connection.prepareStatement("delete from personas where id = ?");
-      ps.setInt(1, id);
-      ps.executeUpdate();
-    }catch(SQLException e){
-      e.printStackTrace();
-      return false;
-    }
-
-    return true;
-  }
-
-  public boolean updatePerson(int id, Person p){
-    try{
-
-      PreparedStatement ps = this.connection.prepareStatement("update personas set nombre=?, apellido=?, edad=? where id = ?");
-      ps.setString(1, p.getNombre());
-      ps.setString(2, p.getApellido());
-      ps.setInt(3, p.getEdad());
-      ps.setInt(4, id);
-      ps.executeUpdate();
+      this.connection.createStatement().execute(query);
     }catch(SQLException e){
       e.printStackTrace();
       return false;
