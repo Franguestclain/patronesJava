@@ -8,13 +8,7 @@ public class Principal {
     public static void main(String args[]) {
 
        MariaDBSingleton db = MariaDBSingleton.connect("jdbc:mysql://localhost:3306", "test_user", "12341234", "test");
-       // La tabla personas solamente tiene los siguientes campos
-       /**
-        * id int(11) not null auto_increment
-        * nombre varchar(15),
-        * apellido varchar (20),
-        * edad int(2)
-        */
+       db.execute("insert into personas values(null, 'Javier', 'Gomez', 22");
        ResultSet rs = db.query("SELECT * FROM personas");
 
        try{
